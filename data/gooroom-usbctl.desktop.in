@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=0.0.1
+Name=Gooroom USB Control
+Name[ko]=구름 USB 편집기
+GenericName=Gooroom USB Control
+GenericName[ko]=구름 USB 편집기
+Exec=/usr/bin/gooroom-usbctl
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=gooroom-usbctl
+Icon[ko]=gooroom-usbctl
+Categories=System
+StartupWMClass=gooroom-usbctl
+StartupNotify=true

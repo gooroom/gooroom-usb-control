@@ -1,0 +1,355 @@
+# GOOROOM USBCTL.
+# Copyright (C) 2020 Gooroom 
+# Copyright (C) 2020 Gooroom
+# Gooroom <gooroom@gooroom.kr>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gooroom-usb-control 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-24 17:43+0900\n"
+"PO-Revision-Date: 2020-09-23 19:30+0900\n"
+"Last-Translator: Gooroom <gooroom@gooroom.kr>\n"
+"Language-Team: Gooroom <gooroom@gooroom.kr>\n"
+"Language: Korean\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/gooroom-usbctl-application.c:87
+msgid ""
+"\n"
+"Local-account can not use Gooroom USB Control.\n"
+msgstr ""
+"\n"
+"로컬 계정은 구름 USB 편집기를 사용할 수 없습니다.\n"
+
+#: src/gooroom-usbctl-window.h:26
+msgid "Cannot handle the request"
+msgstr "요청을 처리할 수 없습니다."
+
+#: src/gooroom-usbctl-window.h:27
+msgid "Already registered equipment"
+msgstr "이미 등록된 장비입니다."
+
+#: src/gooroom-usbctl-window.h:26
+msgid "Duplicate request"
+msgstr "중복 요청입니다."
+
+#: src/gooroom-usbctl-window.h:18
+msgid "already in whitelist"
+msgstr "이미 화이트리스트에 존재합니다."
+
+#: src/gooroom-usbctl-window.h:17
+msgid "local user not supported"
+msgstr "로컬 사용자는 지원하지 않습니다."
+
+#: src/gooroom-usbctl-window.h:16
+msgid "not login"
+msgstr "로그인 상태가 아닙니다."
+
+#: src/gooroom-usbctl-window.h:19
+msgid "serial not found"
+msgstr "시리얼 번호를 찾을 수 없습니다."
+
+#: src/gooroom-usbctl-window.c:469
+#, c-format
+msgid ""
+"\n"
+"NAME: %s\n"
+"STATE: %s\n"
+"PRODUCT: %s\n"
+"VENDOR: %s\n"
+"SERIAL: %s\n"
+"MODEL: %s\n"
+msgstr ""
+"\n"
+"이름: %s\n"
+"상태: %s\n"
+"제품명: %s\n"
+"공급사: %s\n"
+"시리얼: %s\n"
+"모델: %s\n"
+
+#: src/gooroom-usbctl-window.c:320
+#, c-format
+msgid ""
+"\n"
+"USB NAME: %s\n"
+"\n"
+"Register this USB?\n"
+msgstr ""
+"\n"
+"USB 이름: %s\n"
+"\n"
+"USB를 등록하시겠습니까?\n"
+
+#: src/gooroom-usbctl-window.c:402
+#, c-format
+msgid ""
+"\n"
+"USB NAME: %s\n"
+"USB STATE : %s\n"
+"\n"
+"Cancel Registering?\n"
+msgstr ""
+"\n"
+"USB 이름: %s\n"
+"USB 상태: %s\n"
+"\n"
+"등록요청을 취소하시겠습니까?\n"
+
+#: src/gooroom-usbctl-window.c:394
+#, c-format
+msgid ""
+"\n"
+"USB NAME: %s\n"
+"USB STATE : %s\n"
+"\n"
+"Unregister Registered USB?\n"
+msgstr ""
+"\n"
+"USB 이름: %s\n"
+"USB 상태: %s\n"
+"\n"
+"등록승인취소 요청을 하시겠습니까?\n"
+
+#: src/gooroom-usbctl-window.c:184
+msgid "** USB Name Required. **"
+msgstr "** USB 이름을 입력하세요. **"
+
+#: src/gooroom-usbctl-window.c:410
+#, c-format
+msgid ""
+"\n"
+"USB NAME: %s\n"
+"USB STATE : %s\n"
+"\n"
+"Delete Register-Denied USB?\n"
+msgstr ""
+"\n"
+"USB 이름: %s\n"
+"USB 상태: %s\n"
+"\n"
+"등록거절된 USB를 삭제하시겠습니까?\n"
+
+#: src/gooroom-usbctl-window.c:486 src/gooroom-usbctl-window.c:614
+msgid "No response from Agent.\n"
+msgstr "에이전트가 응답하지 않습니다.\n"
+
+#: src/gooroom-usbctl-window.c:368
+#, c-format
+msgid ""
+"\n"
+"[USB Register Request Failed]\n"
+"\n"
+"USB Registration Approval Limit Exceeded.\n"
+msgstr ""
+"\n"
+"[USB 등록 요청 실패]\n"
+"\n"
+"USB 등록 승인 개수 초과.\n"
+
+#: src/gooroom-usbctl-window.c:414
+#, c-format
+msgid ""
+"\n"
+"[USB Register Request Failed]\n"
+"\n"
+"USB Serial\n(%s) is already registering.\n"
+msgstr ""
+"\n"
+"[USB 등록 요청 실패]\n"
+"\n"
+"USB 시리얼\n(%s)는 이미 등록요청중입니다.\n"
+
+#: src/gooroom-usbctl-window.c:573
+#, c-format
+msgid "Approved"
+msgstr "승인목록"
+
+#: src/gooroom-usbctl-window.c:195
+#, c-format
+msgid ""
+"\n"
+"Error Code: %s\n"
+"%s\n"
+"\n"
+msgstr ""
+"\n"
+"오류 코드: %s\n"
+"%s\n"
+"\n"
+
+#: src/gooroom-usbctl-window.c:327 src/gooroom-usbctl-window.c:421
+msgid "NO"
+msgstr "아니오"
+
+#: src/gooroom-usbctl-application.c:83
+#: src/gooroom-usbctl-window.c:191 
+#: src/gooroom-usbctl-window.c:363
+#: src/gooroom-usbctl-window.c:464
+msgid "OK"
+msgstr "확인"
+
+#: src/gooroom-usbctl-window.c:575
+#, c-format
+msgid "Rejected(%d)"
+msgstr "거절목록(%d)"
+
+#: src/gooroom-usbctl-window.c:577
+#, c-format
+msgid "Waiting(%d)"
+msgstr "대기목록(%d)"
+
+#: src/gooroom-usbctl-window.c:325 src/gooroom-usbctl-window.c:419
+msgid "YES"
+msgstr "예"
+
+#: src/gooroom-usbctl-window.c:531
+msgid "unregistering..."
+msgstr "등록 취소중..."
+
+#: gooroom-usbctl.ui:60
+msgid "New USB Register"
+msgstr "USB 메모리 등록"
+
+#: gooroom-usbctl.ui:77
+msgid "Connect USB Memory."
+msgstr "USB 메모리를 연결하세요."
+
+#: gooroom-usbctl.ui:95
+msgid "12:00"
+msgstr "12:00"
+
+#: gooroom-usbctl.ui:108
+msgid "Remaining Time:"
+msgstr "남은 시간:"
+
+#: gooroom-usbctl.ui:145
+msgid "[Connected USB Memory]"
+msgstr "[연결된 USB 메모리 정보]"
+
+#: gooroom-usbctl.ui:164
+msgid "Name"
+msgstr "이름"
+
+#: gooroom-usbctl.ui:177
+msgid "Product"
+msgstr "제품명"
+
+#: gooroom-usbctl.ui:190
+msgid "Size"
+msgstr "크기"
+
+#: gooroom-usbctl.ui:203
+msgid "Vendor"
+msgstr "공급사"
+
+#: gooroom-usbctl.ui:216
+msgid "Serial"
+msgstr "시리얼"
+
+#: gooroom-usbctl.ui:283
+msgid "Model"
+msgstr "모델"
+
+#: gooroom-usbctl.ui:305
+msgid "Cancel"
+msgstr "취소"
+
+#: gooroom-usbctl.ui:321
+msgid "Register"
+msgstr "등록 요청"
+
+#: gooroom-usbctl.ui:345
+msgid "USB Registration"
+msgstr "신규등록"
+
+#: gooroom-usbctl.ui:365
+msgid "Approved List"
+msgstr "승인목록"
+
+#: gooroom-usbctl.ui:417
+msgid "Rejected List"
+msgstr "거절목록"
+
+#: gooroom-usbctl.ui:467
+msgid "Waiting List"
+msgstr "대기목록"
+
+#: gooroom-usbctl.ui:509
+msgid "USB List"
+msgstr "등록정보 확인"
+
+#: gooroom-usbctl.ui:7
+#: src/gooroom-usbctl-application.c:80
+#: src/gooroom-usbctl-window.c:190 src/gooroom-usbctl-window.c:372
+#: src/gooroom-usbctl-window.c:411 src/gooroom-usbctl-window.c:430
+#: src/gooroom-usbctl-window.c:486 src/gooroom-usbctl-window.c:530
+msgid "Gooroom USB Control"
+msgstr "구름 USB 편집기"
+
+#: src/gooroom-usbctl-window.c:473 src/gooroom-usbctl-window.c:580
+#, c-format
+msgid ""
+"\n"
+"[%s Failure]\n"
+"\n"
+"%s\n"
+msgstr ""
+"\n"
+"[%s 실패]\n"
+"\n"
+"%s\n"
+
+#: src/gooroom-usbctl-window.c:468 src/gooroom-usbctl-window.c:575
+#, c-format
+msgid ""
+"\n"
+"[%s Success]\n"
+msgstr ""
+"\n"
+"[%s 성공]\n"
+
+#: src/gooroom-usbctl-window.c:148
+msgid "register-approval"
+msgstr "등록승인"
+
+#: src/gooroom-usbctl-window.c:158
+msgid "register-approval-cancel"
+msgstr "등록승인취소"
+
+#: src/gooroom-usbctl-window.c:154
+msgid "register-deny"
+msgstr "등록거절"
+
+#: src/gooroom-usbctl-window.c:160 src/gooroom-usbctl-window.c:563
+msgid "register-deny-item-remove"
+msgstr "등록거절 USB 삭제"
+
+#: src/gooroom-usbctl-window.c:146 src/gooroom-usbctl-window.c:490
+#: src/gooroom-usbctl-window.c:495
+msgid "registering"
+msgstr "등록요청"
+
+#: src/gooroom-usbctl-window.c:152 src/gooroom-usbctl-window.c:554
+msgid "registering-cancel"
+msgstr "등록요청취소"
+
+#: src/gooroom-usbctl-window.c:159
+msgid "unregister-approval"
+msgstr "삭제승인"
+
+#: src/gooroom-usbctl-window.c:156
+msgid "unregister-deny"
+msgstr "삭제거절"
+
+#: src/gooroom-usbctl-window.c:150 src/gooroom-usbctl-window.c:546
+msgid "unregistering"
+msgstr "삭제요청"
+
+#: src/gooroom-usbctl-window.c:164
+msgid "unknown-state"
+msgstr "상태를 확인할 수 없습니다."
