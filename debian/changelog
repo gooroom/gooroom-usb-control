@@ -1,3 +1,14 @@
+gooroom-usb-control (0.1.0+grm2u1) unstable; urgency=medium
+
+  [ Haru ]
+  * [a9e2c293] Added GPL 2, License.
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 10 Nov 2020 15:20:34 +0900
+
 gooroom-usb-control (0.0.1) unstable; urgency=medium
+
   *Initial Release
+
  -- Gooroom <gooroom@gooroom.kr>  Mon, 4 Aug 2020 15:00:00 +0900
