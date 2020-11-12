@@ -16,7 +16,6 @@
 #define AGENT_DBUS_NAME    "kr.gooroom.agent"
 #define AGENT_DBUS_OBJ     "/kr/gooroom/agent"
 #define AGENT_DBUS_IFACE   "kr.gooroom.agent"
-#define AGENT_DBUS_MSG_FMT "{ \"module\": { \"module_name\": \"%s\", \"task\": { \"task_name\": \"%s\", \"in\": %s } } }"
 
 #define EXCEPT_101          _("not login")
 #define EXCEPT_102          _("local user not supported")

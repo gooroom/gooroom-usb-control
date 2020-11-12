@@ -65,10 +65,18 @@ get_request_value (usb_info *usb,
                    char     *action)
 {
   char *req_val = (char *) calloc (1, BUFSIZ);
-  char *AGENT_DBUS_REQ_FMT = "{ \"action\": \"%s\", \"datetime\": \"%s\", \"login_id\": \"%s\", \"usb_name\": \"%s\", \"usb_product\": \"%s\", \"usb_size\": \"%s\", \"usb_vendor\": \"%s\", \"usb_serial\": \"%s\", \"usb_model\": \"%s\", \"req_seq\": \"%s\" }";
 
   snprintf (req_val, BUFSIZ,
-            AGENT_DBUS_REQ_FMT,
+            "{ \"action\": \"%s\",\
+               \"datetime\": \"%s\",\
+               \"login_id\": \"%s\",\
+               \"usb_name\": \"%s\",\
+               \"usb_product\": \"%s\",\
+               \"usb_size\": \"%s\",\
+               \"usb_vendor\": \"%s\",\
+               \"usb_serial\": \"%s\",\
+               \"usb_model\": \"%s\",\
+               \"req_seq\": \"%s\" }",
             action,
             usb->value[USB_INFO_TIME],
             login_id,
@@ -90,7 +98,14 @@ get_request_message (usb_info *usb,
   char *req_msg = (char *) calloc (1, BUFSIZ);
   
   snprintf (req_msg, BUFSIZ,
-            AGENT_DBUS_MSG_FMT,
+            "{ \"module\": {\
+                 \"module_name\": \"%s\",\
+                 \"task\": {\
+                   \"task_name\": \"%s\",\
+                   \"in\": %s \
+                  }\
+                }\
+              }",
             "config",
             "client_event_usb_whitelist",
             get_request_value (usb, action));
