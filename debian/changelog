@@ -1,3 +1,12 @@
+gooroom-usb-control (0.1.1+grm2u1) unstable; urgency=medium
+
+  [ Haru ]
+  * [cd97db8d] Fix High Priority Flaw.
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 17 Nov 2020 14:09:03 +0900
+
 gooroom-usb-control (0.1.0+grm2u1) unstable; urgency=medium
 
   [ Haru ]
