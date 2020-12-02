@@ -2,11 +2,11 @@ Source: gooroom-usb-control
 Section: admin
 Priority: optional
 Maintainer: Gooroom Engineering Team <devel-os@gooroom.kr>
-Build-Depends: debhelper (>= 11), meson, pkg-config, libgtk-3-dev, libglib2.0-dev, libjson-c-dev
+Build-Depends: debhelper (>= 11), meson, pkg-config, libgtk-3-dev, libglib2.0-dev, libjson-c-dev, libjson-c5
 Standards-Version: 4.1.3
 Homepage: http://www.gooroom.kr
 
 Package: gooroom-usb-control
 Architecture: all
-Depends: libgtk-3-dev, libglib2.0-dev, libjson-c-dev
+Depends: libgtk-3-dev, libglib2.0-dev, libjson-c-dev, libjson-c5
 Description: gooroom-usb-control.

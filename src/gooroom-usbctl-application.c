@@ -12,52 +12,51 @@ static gboolean
 gooroom_usbctl_verify_account (char *name, __uid_t uid)
 {
   FILE *fp = NULL;
-  char *file_contents = NULL;
-  char **passwd_contents = NULL;
-  char **passwd_field = NULL;
-  char **user_field = NULL;
-  char **gecos = NULL;
-  int i = 0;
-  guint cnt = 0;
-  struct stat st;
   gboolean ret = FALSE;
 
-  fp = fopen ("/etc/passwd", "r");
-  if (!fp)
-    return FALSE;
-
-  fstat (fileno (fp), &st);
-  file_contents = (char *) calloc (1, st.st_size + 1);
-  fread (file_contents, st.st_size, 1, fp);
-  file_contents[st.st_size] = '\0';
-  fclose (fp);
-
-  passwd_contents = g_strsplit (file_contents, "\n", -1);
-  for (i=0; i<g_strv_length (passwd_contents); i++)
+  if (g_file_test ("/etc/passwd", G_FILE_TEST_IS_REGULAR)
+      && (fp = fopen ("/etc/passwd", "r")))
   {
-    passwd_field = g_strsplit (passwd_contents[i], ",", -1);
-    cnt = g_strv_length (passwd_field);
-    if (passwd_field[0])
+    struct stat st;
+    fstat (fileno (fp), &st);
+    char *file_contents = (char *) calloc (1, st.st_size + 1);
+    fread (file_contents, st.st_size, 1, fp);
+    file_contents[st.st_size] = '\0';
+    fclose (fp);
+
+    char **passwd_contents = g_strsplit (file_contents, "\n", -1);
+    for (int i=0; i<g_strv_length (passwd_contents); i++)
     {
-      user_field = g_strsplit (passwd_field[0], ":", -1);
-      if (!strcmp (name, user_field[0]) && (uid == atoi (user_field[2]) && cnt >= 5))
+      char **passwd_field = g_strsplit (passwd_contents[i], ",", -1);
+      guint cnt = g_strv_length (passwd_field);
+      if (passwd_field[0])
       {
-        gecos = g_strsplit (passwd_field[4], ":", -1);
-        if (!strcmp ("gooroom-account", gecos[0]))
-          ret = TRUE;
-        g_strfreev (gecos);
+        char **user_field = g_strsplit (passwd_field[0], ":", -1);
+        if (!strcmp (name, user_field[0]) && (atoi (user_field[2]) == uid && cnt >= 5))
+        {
+          char **gecos = g_strsplit (passwd_field[4], ":", -1);
+          if (!strcmp ("gooroom-account", gecos[0]))
+            ret = TRUE;
+          g_strfreev (gecos);
+        }
+        g_strfreev (user_field);
       }
-      g_strfreev (user_field);
+      g_strfreev (passwd_field);
+      passwd_field = NULL;
     }
-    g_strfreev (passwd_field);
-    passwd_field = NULL;
-  }
-  g_strfreev (passwd_contents);
+    g_strfreev (passwd_contents);
 
-  if (file_contents)
+    if (file_contents)
+    {
+      free (file_contents);
+      file_contents = NULL;
+    }
+  }
+  else
   {
-    free (file_contents);
-    file_contents = NULL;
+    if (fp)
+      fclose (fp);
+    return FALSE;
   }
 
   return ret;

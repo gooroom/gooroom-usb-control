@@ -17,7 +17,7 @@ struct _GooroomUsbctlAppWindowPrivate
 
   GtkWidget      *user_image;
   GtkWidget      *user_name_label;
-  
+
   GtkWidget      *usbctl_stack_switcher;
   GtkWidget      *reg_new_button;
   GtkWidget      *reg_new_info_label;
@@ -96,6 +96,7 @@ get_request_message (usb_info *usb,
                      char     *action)
 {
   char *req_msg = (char *) calloc (1, BUFSIZ);
+  char *value = get_request_value (usb, action);
   
   snprintf (req_msg, BUFSIZ,
             "{ \"module\": {\
@@ -108,8 +109,9 @@ get_request_message (usb_info *usb,
               }",
             "config",
             "client_event_usb_whitelist",
-            get_request_value (usb, action));
+            value);
 
+  //g_free (value);
   return req_msg;
 }
 
@@ -251,13 +253,12 @@ timeout_handler (GooroomUsbctlAppWindow *win)
   GtkWidget *dialog = NULL;
   char buf[BUFSIZ] = { 0, };
 
-
   priv = gooroom_usbctl_app_window_get_instance_private (win);
   if (priv->timer_time >= 10)
     snprintf (time_str, 10, "00:%d", priv->timer_time--);
   else
     snprintf (time_str, 10, "00:0%d", priv->timer_time--);
-  gtk_label_set_text (GTK_LABEL (priv->reg_timeout_value_label), time_str); 
+  gtk_label_set_text (GTK_LABEL (priv->reg_timeout_value_label), time_str);
   gtk_widget_show (priv->reg_timeout_value_label);
   if (new_usb)
   {
@@ -273,10 +274,10 @@ timeout_handler (GooroomUsbctlAppWindow *win)
     gtk_widget_set_focus_on_click (priv->reg_confirm_button, TRUE);
     reg_reset (win);
     gtk_label_set_text (GTK_LABEL (priv->reg_timeout_value_label),
-                        _("** USB Name Required. **")); 
+                        _("** USB Name Required. **"));
     gtk_widget_show (priv->reg_timeout_value_label);
   }
-  else if (except) 
+  else if (except)
   {
     snprintf (buf, BUFSIZ,
               _("\nError Code: %s\n%s\n\n"),
@@ -388,7 +389,7 @@ entry_buffer_deleted (GtkEntryBuffer *buffer,
 
   priv = gooroom_usbctl_app_window_get_instance_private (GOOROOM_USBCTL_APP_WINDOW (user_data));
 
-  if ((strlen (gtk_entry_buffer_get_text (buffer))) <= 0)
+  if (0 == (strlen (gtk_entry_buffer_get_text (buffer))))
   {
     gtk_widget_set_sensitive (priv->reg_confirm_button, FALSE);
     if (new_usb)
@@ -407,7 +408,7 @@ entry_buffer_inserted (GtkEntryBuffer *buffer,
 
   priv = gooroom_usbctl_app_window_get_instance_private (GOOROOM_USBCTL_APP_WINDOW (user_data));
 
-  if ((strlen (gtk_entry_buffer_get_text (buffer))) > 0)
+  if (0 < strlen (gtk_entry_buffer_get_text (buffer)))
   {
     gtk_widget_set_sensitive (priv->reg_confirm_button, TRUE);
     gtk_widget_hide (priv->reg_timeout_value_label);
@@ -428,7 +429,7 @@ reg_new_button_clicked (GtkButton *widget,
     g_dbus_connection_signal_unsubscribe (conn, sig_sub_id);
   gtk_widget_show (priv->reg_new_info_label);
   gtk_widget_show (priv->reg_timeout_info_label);
-  gtk_label_set_text (GTK_LABEL (priv->reg_timeout_value_label), "01:00"); 
+  gtk_label_set_text (GTK_LABEL (priv->reg_timeout_value_label), "01:00");
   gtk_widget_show (priv->reg_timeout_value_label);
   gtk_widget_set_sensitive (priv->reg_confirm_button, FALSE);
   gtk_widget_set_sensitive (priv->reg_cancel_button, TRUE);
@@ -469,8 +470,7 @@ reg_confirm_button_clicked (GtkButton *widget,
   char *arg = NULL;
   GtkWidget *dialog = NULL;
   char buf[BUFSIZ] = { 0, };
-  const gchar *msg;
-  const char *error_code;
+  const gchar *msg = NULL;
   GError *error = NULL;
   json_object *root_obj = NULL;
   json_object *module_obj = NULL;
@@ -480,7 +480,7 @@ reg_confirm_button_clicked (GtkButton *widget,
   json_object *error_obj = NULL;
   json_object *message_obj = NULL;
   GooroomUsbctlAppWindowPrivate *priv;
-  
+
   priv = gooroom_usbctl_app_window_get_instance_private (GOOROOM_USBCTL_APP_WINDOW (user_data));
 
   ltime = g_date_time_new_now_local ();
@@ -500,7 +500,7 @@ reg_confirm_button_clicked (GtkButton *widget,
   result = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
-  if (result == GTK_RESPONSE_ACCEPT)
+  if (GTK_RESPONSE_ACCEPT == result)
   {
     if (usb_exist_num < atoi (usb_policy->value[USB_POLICY_INFO_USB_LIMIT]))
     {
@@ -518,6 +518,7 @@ reg_confirm_button_clicked (GtkButton *widget,
                                                -1,
                                                NULL,
                                                &error);
+        g_free (arg);
         if (error)
         {
           snprintf (buf, BUFSIZ,
@@ -545,18 +546,18 @@ reg_confirm_button_clicked (GtkButton *widget,
             json_object_object_get_ex (out_obj, "errorcode", &error_obj);
             if (error_obj)
             {
-              error_code = json_object_get_string (error_obj);
-              if (!strcmp (error_code, "601")) 
+              const char *error_code = json_object_get_string (error_obj);
+              if (!strcmp (error_code, "601"))
                 snprintf (buf, BUFSIZ,
                           _("\n[%s Failure]\n\n%s\n"),
                           _("registering"),
                           ERROR_601);
-              else if (!strcmp (error_code, "602")) 
+              else if (!strcmp (error_code, "602"))
                 snprintf (buf, BUFSIZ,
                           _("\n[%s Failure]\n\n%s\n"),
                           _("registering"),
                           ERROR_602);
-              else 
+              else
                 snprintf (buf, BUFSIZ,
                           _("\n[%s Failure]\n\n%s\n"),
                           _("registering"),
@@ -602,9 +603,6 @@ delete_button_clicked (GtkButton *widget,
   GVariant *ret_msg = NULL;
   GVariant *ret_val = NULL;
   GError *error = NULL;
-  char *error_msg = NULL;
-  const gchar *msg;
-  const char *error_code;
   GtkWidget *dialog = NULL;
   char buf[BUFSIZ] = { 0, };
   json_object *root_obj = NULL;
@@ -646,7 +644,7 @@ delete_button_clicked (GtkButton *widget,
   result = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
-  if (result == GTK_RESPONSE_ACCEPT)
+  if (GTK_RESPONSE_ACCEPT == result)
   {
     arg = get_request_message (usbs[usb_idx], req);
     ret_msg = g_dbus_connection_call_sync (conn,
@@ -660,6 +658,7 @@ delete_button_clicked (GtkButton *widget,
                                            -1,
                                            NULL,
                                            &error);
+    g_free (arg);
     if (error)
     {
       snprintf (buf, BUFSIZ,
@@ -671,7 +670,7 @@ delete_button_clicked (GtkButton *widget,
     else if (ret_msg)
     {
       g_variant_get (ret_msg, "(v)", &ret_val);
-      msg = g_variant_dup_string (ret_val, NULL);
+      const gchar *msg = g_variant_dup_string (ret_val, NULL);
       root_obj = json_tokener_parse (msg);
       json_object_object_get_ex (root_obj, "module", &module_obj);
       json_object_object_get_ex (module_obj, "task", &task_obj);
@@ -684,20 +683,21 @@ delete_button_clicked (GtkButton *widget,
                   get_state_string (req));
       else
       {
+        char *error_msg = NULL;
         json_object_object_get_ex (out_obj, "errorcode", &error_obj);
         if (error_obj)
         {
-          error_code = json_object_get_string (error_obj);
-          if (!strcmp (error_code, "601")) 
+          const char *error_code = json_object_get_string (error_obj);
+          if (!strcmp (error_code, "601"))
             error_msg = ERROR_601;
-          else if (!strcmp (error_code, "602")) 
+          else if (!strcmp (error_code, "602"))
             error_msg = ERROR_601;
-          else 
+          else
             error_msg = ERROR_DEFAULT;
         }
         else
           error_msg = ERROR_DEFAULT;
-        
+
         snprintf (buf, BUFSIZ,
                   _("\n[%s Failure]\n\n%s\n"),
                   get_state_string (req),
@@ -746,7 +746,6 @@ make_usb_list (GooroomUsbctlAppWindow *win)
   int approved_num = 0;
   int rejected_num = 0;
   int waiting_num = 0;
-  int i;
   char buf[BUFSIZ];
   char *markup;
   char *markup_color;
@@ -774,14 +773,14 @@ make_usb_list (GooroomUsbctlAppWindow *win)
   if (usb_policy)
     free (usb_policy);
   usb_policy = (usb_policy_info *) calloc (1, sizeof (usb_policy_info));
-  if (gooroom_usbctl_get_usb_policy_info (usb_policy) == USB_POLICY_INFO_SET_FAILURE)
+  if (USB_POLICY_INFO_SET_FAILURE == gooroom_usbctl_get_usb_policy_info (usb_policy))
     usb_policy->value[USB_POLICY_INFO_USB_LIMIT] = "?";
 
   usb_exist_num = 0;
   usb_num = gooroom_usbctl_get_usb_infos (usbs);
   if (usb_num > 0)
   {
-    for (i=0; i<usb_num; i++)
+    for (int i=0; i<usb_num; i++)
     {
       usb = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
       gtk_widget_override_background_color (usb,
@@ -897,7 +896,6 @@ file_modify_check (gpointer user_data)
   int wd[2];
   char buf[BUFSIZ] __attribute__ ((aligned(__alignof__(struct inotify_event))));
   const struct inotify_event *event;
-  ssize_t len;
   char *ptr;
 
   fd = inotify_init1 (IN_CLOEXEC);
@@ -906,8 +904,8 @@ file_modify_check (gpointer user_data)
 
   for (;;)
   {
-    len = read (fd, buf, sizeof (buf));
-    if ((len == -1 && errno != EAGAIN) || (len <= 0))
+    ssize_t len = read (fd, buf, sizeof (buf));
+    if ((-1 == len && EAGAIN != errno) || (0 >= len))
       continue;
     for (ptr=buf; ptr<buf+len; ptr+=sizeof(struct inotify_event)+event->len)
     {
