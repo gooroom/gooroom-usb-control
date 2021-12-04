@@ -1,3 +1,10 @@
+gooroom-usb-control (0.3.0+grm3u1) unstable; urgency=medium
+
+  [ Haru ]
+  * [f9ae3f67] Add libjson-c5 dependency.
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sat, 04 Dec 2021 19:42:32 +0900
+
 gooroom-usb-control (0.1.1+grm2u1) unstable; urgency=medium
 
   [ Haru ]
