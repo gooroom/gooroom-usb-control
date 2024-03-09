@@ -1,3 +1,13 @@
+gooroom-usb-control (4.0.0+grm4u1) unstable; urgency=medium
+
+  [ jongkyung.woo ]
+  * [5b2263df] Rebuild on gooroom-4.0
+
+  [ boyeon.choi ]
+  * [500fd999] Add desktop comment
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sat, 09 Mar 2024 17:50:55 +0900
+
 gooroom-usb-control (0.3.0+grm3u1) unstable; urgency=medium
 
   [ Haru ]
