@@ -311,7 +311,8 @@ take_new_usb (GDBusConnection *conn,
 
   g_variant_get (param, "(s)", &message);
   msg_field = g_strsplit (message, ",", 0);
-  if (!strcmp (msg_field[USB_SIGNAL_TYPE], "normal"))
+  if (g_strv_length (msg_field) >= USB_SIGNAL_NUM &&
+      !strcmp (msg_field[USB_SIGNAL_TYPE], "normal"))
   {
     new_usb = (usb_info *) calloc (1, sizeof (usb_info));
     login_id = g_strdup (msg_field[USB_SIGNAL_LOGIN_ID]);
@@ -324,7 +325,8 @@ take_new_usb (GDBusConnection *conn,
     new_usb->value[USB_INFO_SEQ] = g_strdup ("");
     valid_signal = TRUE;
   }
-  else if (!strcmp (msg_field[USB_SIGNAL_TYPE], "except"))
+  else if (g_strv_length (msg_field) >= EXCEPT_INFO_NUM &&
+           !strcmp (msg_field[USB_SIGNAL_TYPE], "except"))
   {
     except = (except_info *) calloc (1, sizeof (except_info));
     except->error_code = g_strdup (msg_field[EXCEPT_ERROR_CODE]);
@@ -368,10 +370,10 @@ waiting_usb_signal (void)
   }
 
   sig_sub_id = g_dbus_connection_signal_subscribe (conn,
-                                                   NULL,
-                                                   NULL,
+                                                   "kr.gooroom.GRACDEVD",
+                                                   "kr.gooroom.GRACDEVD",
                                                    "media_usb_info",
-                                                   NULL,
+                                                   "/kr/gooroom/GRACDEVD",
                                                    NULL,
                                                    G_DBUS_SIGNAL_FLAGS_NONE,
                                                    take_new_usb,
